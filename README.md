@@ -7,7 +7,8 @@ koajs + postgres
 `$ npm install`
 
 ### Create file .env:
-``NODE_ENV='development'
+```
+NODE_ENV='development'
 JWT_EXPIRATION='1d'
 JWT_SECRET='secretKey'
 APP_VERSION='v1.0.0'
@@ -17,7 +18,8 @@ DB_HOST=localhost
 DB_NAME=express
 DB_USER=root
 DB_PASS=123456
-``
+```
+
 ### Start the server:
 ```bash
 $ npm start
