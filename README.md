@@ -4,15 +4,11 @@ koajs + postgres
 ## Quickstart
 
 ### Install dependencies:
-`
-$ npm install
-`
+```$ npm install```
 
 ### Create file .env:
 
-```bash
-$ touch .env
-```
+```$ touch .env```
 
 Copy to .env
 ```
@@ -29,9 +25,7 @@ DB_PASS=123456
 ```
 
 ### Start the server:
-```bash
-$ npm start
-```
+```$ npm start```
 
 View the website at: http://localhost:3000
 
