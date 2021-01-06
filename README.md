@@ -19,7 +19,9 @@ DB_USER=root
 DB_PASS=123456
 ``
 ### Start the server:
-`$ npm start`
+```bash
+$ npm start
+```
 
 View the website at: http://localhost:3000
 
