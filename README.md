@@ -4,9 +4,17 @@ koajs + postgres
 ## Quickstart
 
 ### Install dependencies:
-`$ npm install`
+`
+$ npm install
+`
 
 ### Create file .env:
+
+```bash
+$ touch .env
+```
+
+Copy to .env
 ```
 NODE_ENV='development'
 JWT_EXPIRATION='1d'
