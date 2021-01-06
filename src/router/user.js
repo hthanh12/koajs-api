@@ -3,31 +3,44 @@
 const userController = require("../controller/userController");
 const authentication = require("../middleware/authentication");
 const validateUser = require("../middleware/userValidate");
+const Router = require('koa-router');
+const router = new Router({
+	prefix: '/user'
+});
+  router.post("/", 
+     validateUser.validateCreate,
+     userController.create
+  )
 
-module.exports = (router) => {
-  // router.route("/user")
-  //   .post(validateUser.validateCreate, 
-  //       userController.create);
   router.get('/', async (ctx) => {
     ctx.body = {
       status: 'success',
       message: 'hello, user!'
     };
   })
-  // router.route("/login")
-  //   .post(validateUser.validateLogin, 
-  //       userController.login);
 
-  // router
-  //   .route("/checkToken")
-  //   .get(authentication.isLogged, 
-  //       userController.checkToken);
+  router.post("/login", 
+    validateUser.validateLogin,
+    userController.login
+  )
+
+  router.get("/checkToken", 
+    authentication.isLogged, 
+    userController.checkToken);
+
+  router.put(
+    "/password",
+    validateUser.validateChangepassword,
+    authentication.isLogged,
+    userController.changePassword
+  );
 
   // router
   //   .route("/user/password")
-  //   .put(validateUser.validateChangepassword, 
-  //       authentication.isLogged, 
-  //       userController.changePassword);
+    // .put(validateUser.validateChangepassword, 
+    //     authentication.isLogged, 
+    //     userController.changePassword);
 
-  return router;
-};
+
+module.exports = router
+

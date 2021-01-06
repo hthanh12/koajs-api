@@ -1,78 +1,80 @@
 const { User } = require("../model");
-const response = require("../utils/response");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
+const response = require("../utils/response");
 
-
-exports.login = async (req, res) => {
+exports.login = async (ctx) => {
   try {
-    let { username, password } = req.body;
+    let { username, password } = ctx.request.body;
     let user = await User.findOne({ where: { username } });
 
-    if (!user) return response.notFound(res, { error: "Not found user" });
+    if (!user) return ctx.notFound(ctx, { error: "Not found user" });
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return response.unauthorized(res, { error: "Wrong password" });
+    if (!match) return response.unauthorized(ctx, { error: "Wrong password" });
     let token = jwt.sign({ id: user.id }, config.jwt_secret);
 
     delete user.dataValues.password;
-    return response.success(res, { data: { token, user } });
-    
+    return response.success(ctx, { data: { token, user } });
   } catch (error) {
-    return response.error(res, { error });
+    return response.error(ctx, { error });
   }
 };
 
-exports.create = async (req, res) => {
+exports.create = async (ctx) => {
   try {
-    let { password, username } = req.body;
+    let { password, username } = ctx.request.body;
     let hashPwd = await bcrypt.hash(password, 256);
 
     let user = await User.findOne({ where: { username: username } });
 
-    if (user) return response.conflict(res, { error: "Username already exists" });
+    if (user)
+      return response.conflict(ctx, { error: "Username already exists" });
 
     let createUser = await User.create({
       username,
       password: hashPwd,
     });
 
-    return response.created(res, { data: createUser });
+    return response.created(ctx, { data: createUser });
   } catch (error) {
-    return response.error(res, { error });
+    return response.error(error);
   }
 };
 
-exports.checkToken = async (req, res) => {
+exports.checkToken = async (ctx) => {
   try {
-    let user = req.user;
+    let user = ctx.state.user;
     delete user.dataValues.password;
-    if (!user) return response.notFound(res, { error: "Not found user" });
+    if (!user) return response.notFound(ctx, { error: "Not found user" });
 
-    return response.success(res, { data: user });
+    return response.success(ctx, { data: user });
   } catch (error) {
-    return response.error(res, { error });
+    return response.error(ctx, { error });
   }
 };
 
-exports.changePassword = async (req, res) => {
+exports.changePassword = async (ctx) => {
   try {
-    let user = req.user;
-    let { passwordOld, passwordNew } = req.body;
+    let user = ctx.state.user;
+    let { passwordOld, passwordNew } = ctx.request.body;
     // check password
     const match = await bcrypt.compare(passwordOld, user.dataValues.password);
-    if (!match) return response.unauthorized(res, { error: "Wrong password" });
+    if (!match) return response.unauthorized(ctx, { error: "Wrong password" });
 
     let hashPwd = await bcrypt.hash(passwordNew, 256);
 
     // update database
-    const userUpdate = await User.update({password: hashPwd},{ where: { id: user.id }});
+    const userUpdate = await User.update(
+      { password: hashPwd },
+      { where: { id: user.id } }
+    );
     // delete field sensitive information
     delete user.dataValues.password;
-   
-    return response.success(res, { data: "Change password success" });
+
+    return response.success(ctx, { data: "Change password success" });
   } catch (error) {
-    return response.error(res, { error });
+    return response.error(ctx, { error });
   }
 };

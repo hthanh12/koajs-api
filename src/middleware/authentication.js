@@ -3,19 +3,19 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../model");
 const response = require("../utils/response");
 
-exports.isLogged = async (req, res, next) => {
+exports.isLogged = async (ctx, next) => {
   try {
-    const authHeader = req.headers["authorization"];
+    const authHeader = ctx.request.header["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (token == null)
-      return response.unauthorized(res, { message: "Unauthorized" });
+      return response.unauthorized(ctx, { message: "Unauthorized" });
     let tokenInfo;
     await new Promise((resolve, reject) => {
       jwt.verify(token, config.jwt_secret, (err, decoded) => {
         console.log(decoded);
         if (err) {
           console.log(err);
-          return response.unauthorized(res, { error: "Token is invalid" });
+          return response.unauthorized(ctx, { error: "Token is invalid" });
         }
         console.log("verify token done");
         tokenInfo = decoded;
@@ -23,11 +23,11 @@ exports.isLogged = async (req, res, next) => {
       });
     });
     let user = await User.findByPk(tokenInfo.id);
-    if (!user) return response.notFound(res, { error: "Not found user" });
-    req.user = user;
-    console.log(req.user);
-    next();
+    if (!user) return response.notFound(ctx, { error: "Not found user" });
+    ctx.state.user = user;
+    // console.log(ctx.state.user);
+    await next();
   } catch (error) {
-    return response.error(res, { error });
+    return response.error(ctx, { error });
   }
 };

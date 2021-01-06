@@ -29,19 +29,17 @@ const toResponse = (statusCode, params = {}) => {
     return {
       status: "success",
       data,
-    };}
+    };
+  }
 
   if (statusCode >= 400 && statusCode < 500) {
     return {
       status: "error",
       error,
     };
-  } else {
+  } else {      
     return {
       status: statusCode < 500 ? "fail" : "error",
-      code,
-      data,
-      message,
       error,
     };
   }
@@ -56,92 +54,91 @@ class Response {
   }
 
   //  OK: 200
-  static success(res, params = {}) {
-    let status = params.statusCode || res.statusCode;
-    if (status >= 400) {
-      status = this.STATUS_CODES.OK;
+  static success(ctx, params = {}) {
+    ctx.status = params.statusCode || ctx.status;
+    if (ctx.status >= 400) {
+      ctx.status = this.STATUS_CODES.OK;
     }
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static fail(res, params = {}) {
-    let status = params.statusCode || res.statusCode;
-    if (status < 400 || status >= 500) {
-      status = this.STATUS_CODES.BAD_REQUEST;
+  static fail(ctx, params = {}) {
+    ctx.status = params.statusCode || ctx.status;
+    if (ctx.status < 400 || status >= 500) {
+      ctx.status = this.STATUS_CODES.BAD_REQUEST;
     }
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static error(res, params = {}) {
-    let status = params.statusCode || res.statusCode;
-    if (status < 500) {
-      status = this.STATUS_CODES.INTERNAL_SERVER_ERROR;
+  static error(ctx, params = {}) {
+    ctx.status = params.statusCode || ctx.status;
+    if (ctx.status < 500) {
+      ctx.status = this.STATUS_CODES.INTERNAL_SERVER_ERROR;
     }
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static ok(res, params = {}) {
-    let status = this.STATUS_CODES.OK;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static ok(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.OK;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static created(res, params = {}) {
-    let status = this.STATUS_CODES.CREATED;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static created(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.CREATED;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-
-  static noContent(res, params = {}) {
-    let status = this.STATUS_CODES.NO_CONTENT;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static noContent(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.NO_CONTENT;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static badRequest(res, params = {}) {
-    let status = this.STATUS_CODES.BAD_REQUEST;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static badRequest(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.BAD_REQUEST;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static unauthorized(res, params = {}) {
-    let status = this.STATUS_CODES.UNAUTHORIZED;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static unauthorized(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.UNAUTHORIZED;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static forbidden(res, params = {}) {
-    let status = this.STATUS_CODES.FORBIDDEN;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static forbidden(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.FORBIDDEN;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static notFound(res, params = {}) {
-    let status = this.STATUS_CODES.NOT_FOUND;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static notFound(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.NOT_FOUND;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static requestTimeout(res, params = {}) {
-    let status = this.STATUS_CODES.REQUEST_TIMEOUT;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static requestTimeout(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.REQUEST_TIMEOUT;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static conflict(res, params = {}) {
-    let status = this.STATUS_CODES.CONFLICT;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static conflict(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.CONFLICT;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 
-  static internalServerError(res, params = {}) {
-    let status = this.STATUS_CODES.INTERNAL_SERVER_ERROR;
-    let body = toResponse(status, params);
-    return res.status(status).json(body);
+  static internalServerError(ctx, params = {}) {
+    ctx.status = this.STATUS_CODES.INTERNAL_SERVER_ERROR;
+    ctx.body = toResponse(ctx.status, params);
+    return ctx.body;
   }
 }
 

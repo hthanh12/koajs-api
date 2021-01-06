@@ -4,8 +4,8 @@ const app = new Koa();
 const indexRoutes = require('./router');
 const config = require('./config')
 require('dotenv').config()
-
-const PORT = config.port;
+console.log(config)
+const PORT = process.env.PORT;
 const environment = config.env;
 
 // app.use(morgan('combined'))
@@ -15,7 +15,7 @@ app.use(bodyParser());
 //   res.send(`Listening on Port ${PORT} / at ${environment} Env `);
 // });
 
-app.use(indexRoutes.routes());
+app.use(indexRoutes.routes(),indexRoutes.allowedMethods());
 
 // CORS ALL ACCESS
 // app.disable("x-powered-by");

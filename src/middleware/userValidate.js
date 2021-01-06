@@ -3,9 +3,9 @@ const reponse = require("../utils/response");
 
 const parameter = new Parameter();
 
-exports.validateLogin = async (req, res, next) => {
+exports.validateLogin = async (ctx, next) => {
   try {
-    let { username, password } = req.body;
+    let { username, password } = ctx.request.body;
 
     let data = {
       username: username,
@@ -17,19 +17,20 @@ exports.validateLogin = async (req, res, next) => {
     };
 
     let error = parameter.validate(rule, data);
-    if (error) return reponse.badRequest(res, { error });
+    if (error) return reponse.badRequest(ctx, { error });
     await next();
   } catch (error) {
-    return reponse.error(res, { error });
+    return reponse.error(ctx, { error });
   }
 };
 
 
 
-exports.validateCreate = async (req, res, next) => {
+exports.validateCreate = async (ctx, next) => {
   try {
-    let { username, password } = req.body;
+    let { username, password } = ctx.request.body;
 
+    console.log(username,password)
     let data = {
       username: username,
       password: password,
@@ -40,16 +41,18 @@ exports.validateCreate = async (req, res, next) => {
     };
 
     let error = parameter.validate(rule, data);
-    if (error) return reponse.badRequest(res, { error });
+    console.log(error)
+    if (error) return reponse.badRequest(ctx, { error });
+
     await next();
   } catch (error) {
-    return reponse.error(res, { error });
+    return reponse.error(ctx, { error });
   }
 };
 
-exports.validateChangepassword = async (req, res, next) => {
+exports.validateChangepassword = async (ctx, next) => {
   try {
-    let { passwordOld, passwordNew } = req.body;
+    let { passwordOld, passwordNew } = ctx.request.body;
 
     let data = {
       passwordOld: passwordOld,
@@ -61,9 +64,10 @@ exports.validateChangepassword = async (req, res, next) => {
     };
 
     let error = parameter.validate(rule, data);
-    if (error) return reponse.badRequest(res, { error });
+    if (error) return reponse.badRequest(ctx, { error });
+
     await next();
   } catch (error) {
-    return reponse.error(res, { error });
+    return reponse.error(ctx, { error });
   }
 };

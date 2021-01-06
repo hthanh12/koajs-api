@@ -8,7 +8,7 @@ const config = {
     rootUrl: process.env.ROOT_URL,
     name: process.env.APP_NAME,
     host: process.env.APP_HOST,
-    port: process.env.APP_PORT,
+    port: process.env.PORT,
     secret: process.env.APP_SECRET,
     version: process.env.APP_VERSION,
     utc: 7,
