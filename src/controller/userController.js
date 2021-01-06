@@ -70,6 +70,7 @@ exports.changePassword = async (ctx) => {
       { password: hashPwd },
       { where: { id: user.id } }
     );
+    
     // delete field sensitive information
     delete user.dataValues.password;
 
