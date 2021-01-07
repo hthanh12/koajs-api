@@ -1,7 +1,7 @@
 "use strict";
 
 require('dotenv').config()
-//console.log(process.env)
+//console.log(process.env.)
 
 const config = {
     env: process.env.NODE_ENV,
