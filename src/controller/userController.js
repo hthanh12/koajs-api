@@ -35,11 +35,31 @@ exports.create = async (ctx) => {
     let createUser = await User.create({
       username,
       password: hashPwd,
+      status: 1
     });
 
     return response.created(ctx, { data: createUser });
   } catch (error) {
-    return response.error(error);
+    return response.error(ctx, { error });
+  }
+};
+
+exports.delete = async (ctx) => {
+  try {
+    
+    let user = await User.findOne({ where: { username: username } });
+    if (!user)
+      return response.notFound(ctx, { error: "Not found user" });
+
+    // update database
+    const userDelete = await User.update(
+      { status: 2 },
+      { where: { id: user.id } }
+    );
+
+    return response.success(ctx, { data: "Delete user success" });
+  } catch (error) {
+    return response.error(ctx, { error });
   }
 };
 

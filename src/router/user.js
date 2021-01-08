@@ -35,12 +35,5 @@ const router = new Router({
     userController.changePassword
   );
 
-  // router
-  //   .route("/user/password")
-    // .put(validateUser.validateChangepassword, 
-    //     authentication.isLogged, 
-    //     userController.changePassword);
-
-
 module.exports = router
 

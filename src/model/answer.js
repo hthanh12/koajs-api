@@ -1,30 +1,33 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define(
-      'User',
+    const Answer = sequelize.define(
+      'Answer',
       {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement:true
         },
-        password: {
+        id_question:{
+          type: DataTypes.INTEGER,
+        },
+        name: {
           type: DataTypes.STRING,
         },
-        username: {
+        value: {
           type: DataTypes.STRING,
         },
-        status:{
+        result: {
           type: DataTypes.INTEGER,
         },
       },
       {
         timestamps: false,
-        tableName: 'users',
+        tableName: 'answer',
       }
       
     );
-    User.associate = function (models) {
+    Answer.associate = function (models) {
       // associations can be defined here
     };
-    return User;
+    return Answer;
   };
