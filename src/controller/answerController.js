@@ -1,21 +1,16 @@
 const { Answer } = require("../model");
 const response = require("../utils/response");
+const answerService = require("../service/answer");
+const { QueryTypes,sequelize } = require('sequelize');
 
-exports.checkResult = async (ctx) => {
+
+exports.sameResult = async (ctx) => {
   try {
-    let score = 0;
-    let { answers, ids_question } = ctx.request.body;
-    console.log({ answers, ids_question });
-
-    for (let i = 0; i < ids_question.length; i++) {
-      let checkAnswer = await Answer.findOne({
-        where: { id_question: ids_question[i], value: answers[i] },
-      });
-
-      if(checkAnswer.result) score++;
-    }
-
-    return response.success(ctx, { data: {score} });
+    let {questionId, answerList} = ctx.params;
+    
+    const answer = await sequelize.query('SELECT * FROM "users"',{ type: QueryTypes.SELECT });
+    console.log(answer)
+    return response.success(ctx, { data: { questionId, answerList } });
   } catch (error) {
     return response.error(ctx, { error });
   }

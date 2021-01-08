@@ -7,24 +7,17 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
           autoIncrement:true
         },
-        id_question:{
+        id_user: {
           type: DataTypes.INTEGER,
         },
-        name: {
-          type: DataTypes.STRING,
-        },
-        value: {
-          type: DataTypes.STRING,
-        },
-        result: {
-          type: DataTypes.INTEGER,
-        },
+          list_answers: {
+            type: DataTypes.JSONB,
+          },
       },
       {
         timestamps: false,
-        tableName: 'answer',
+        tableName: 'answers',
       }
-      
     );
     Answer.associate = function (models) {
       // associations can be defined here

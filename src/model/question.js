@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
           primaryKey: true,
           autoIncrement:true
         },
-        content: {
-          type: DataTypes.STRING,
+        answers_list: {
+          type: DataTypes.JSONB,
         },
         value: {
           type: DataTypes.STRING,
@@ -16,10 +16,19 @@ module.exports = (sequelize, DataTypes) => {
         id_exam: {
           type: DataTypes.INTEGER,
         },
+        content: {
+          type: DataTypes.STRING,
+        },
+        meta: {
+          type: DataTypes.JSONB,
+        },
+        correct_answers: {
+          type: DataTypes.JSONB,
+        },
       },
       {
         timestamps: false,
-        tableName: 'question',
+        tableName: 'questions',
       }
       
     );

@@ -7,15 +7,17 @@ const Router = require('koa-router');
 const router = new Router({
 	prefix: '/answer'
 });
-  router.get('/', async (ctx) => {
-    ctx.body = {
-      status: 'success',
-      message: 'hello, answer!'
-    };
-  })
 
-  router.post("/checkResult", 
-    answerController.checkResult
+router.get("/", async (ctx) => {
+  ctx.body = {
+    status: "success",
+    message: "hello, answer!",
+  };
+});
+
+  router.get("/sameResult/:questionId/:answerList", 
+    authentication.isLogged,
+    answerController.sameResult
   )
 module.exports = router
 
