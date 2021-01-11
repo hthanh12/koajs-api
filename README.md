@@ -30,4 +30,8 @@ DB_PASS=123456
 View the website at: http://localhost:3000
 
 ### Database
+#### Dump
  Download in [here](https://drive.google.com/file/d/1dcDkgMjy0U5sH9qgq8ciGpphdasDhs5k/view?usp=sharing)
+#### Design
+![E-learning](https://user-images.githubusercontent.com/23132269/104166064-c4ae8d00-542c-11eb-8760-c3874eed356e.png)
+
