@@ -33,5 +33,5 @@ View the website at: http://localhost:3000
 #### Dump
  Download in [here](https://drive.google.com/file/d/1dcDkgMjy0U5sH9qgq8ciGpphdasDhs5k/view?usp=sharing)
 #### Design
-![E-learning](https://user-images.githubusercontent.com/23132269/104152434-1bf33400-5412-11eb-9ba1-e0fd884ce9a3.png)
+![E-learning](https://user-images.githubusercontent.com/23132269/104166064-c4ae8d00-542c-11eb-8760-c3874eed356e.png)
 
