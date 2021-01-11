@@ -5,15 +5,20 @@ const { QueryTypes,sequelize, literal,Op } = require('sequelize');
 
 exports.sameResult = async (ctx) => {
   try {
+    let count = 0;
     let {questionId, answerList} = ctx.params;
-    console.log(answerList)
-    const answer = await Answer.findAll({where: {
+    console.log(questionId,answerList)
+    questionId = parseInt(questionId)
+    answerList = parseInt(answerList)
+    const answer = await Answer.findAndCountAll({where: {
       list_answers:{
-        [Op.contains]:[{"answer": 1, "id_question": 1}]
+        [Op.contains]:[{"answer": answerList, "id_question": questionId}]
       }
     }})
-    console.log(answer)
-    return response.success(ctx, { data: { questionId, answerList } });
+
+    if(!answer) return response.error(ctx, {error:"Can not get same answer"})
+    count = answer.count--;
+    return response.success(ctx, { data: { count, questionId, answerList } });
   } catch (error) {
     console.log(error)
     return response.error(ctx, { error });

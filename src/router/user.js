@@ -35,5 +35,11 @@ const router = new Router({
     userController.changePassword
   );
 
+  router.delete(
+    "/",
+    authentication.isLogged,
+    userController.deleteUser
+  );
+
 module.exports = router
 

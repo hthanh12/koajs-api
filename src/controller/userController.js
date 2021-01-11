@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 const response = require("../utils/response");
+const { error } = require("../utils/response");
 
 exports.login = async (ctx) => {
   try {
@@ -38,6 +39,8 @@ exports.create = async (ctx) => {
       status: 1
     });
 
+    if(!createUser) return response.error(ctx, {error: "Can not create user"})
+    
     return response.created(ctx, { data: createUser });
   } catch (error) {
     return response.error(ctx, { error });
@@ -99,3 +102,21 @@ exports.changePassword = async (ctx) => {
     return response.error(ctx, { error });
   }
 };
+
+
+exports.deleteUser = async (ctx) => {
+  try {
+    let user = ctx.state.user;
+
+    // update database
+    const userDelete = await User.update(
+      { status: 1 },
+      { where: { id: user.id } }
+    );
+
+    return response.success(ctx, { data: "Delete user success" });
+  } catch (error) {
+    return response.error(ctx, { error });
+  }
+};
+

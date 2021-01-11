@@ -20,5 +20,23 @@ const router = new Router({
     authentication.isLogged,
     questionController.checkResult
   )
+
+  router.post("/", 
+    authentication.isLogged,
+    questionController.createItem
+  )
+
+  router.put("/:questionId", 
+    authentication.isLogged,
+    questionController.updateItem
+  )
+
+  router.delete("/:questionId", 
+    authentication.isLogged,
+    questionController.deleteItem
+  )
+
+
+  
 module.exports = router
 

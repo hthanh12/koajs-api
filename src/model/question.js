@@ -25,6 +25,15 @@ module.exports = (sequelize, DataTypes) => {
         correct_answers: {
           type: DataTypes.JSONB,
         },
+        updatedBy:{
+          type: DataTypes.INTEGER
+        },
+        createdBy:{
+          type: DataTypes.INTEGER
+        },
+        status:{
+          type: DataTypes.INTEGER
+        }
       },
       {
         timestamps: false,
