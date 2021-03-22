@@ -1,4 +1,4 @@
-const { Answer } = require("../model");
+const { Answer } = require("../models");
 const response = require("../utils/response");
 
 exports.saveAnswer = async (userId, listAnswers) => {

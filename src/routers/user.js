@@ -1,6 +1,6 @@
 "use strict";
 
-const userController = require("../controller/userController");
+const userController = require("../controllers/userController");
 const authentication = require("../middleware/authentication");
 const validateUser = require("../middleware/userValidate");
 const Router = require('koa-router');

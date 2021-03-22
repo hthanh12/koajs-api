@@ -1,7 +1,7 @@
 const Koa = require('koa');
 const bodyParser = require("koa-bodyparser");
 const app = new Koa();
-const router = require('./router');
+const router = require('./routers');
 const config = require('./config');
 const morgan = require('koa-morgan');
 require('dotenv').config()
@@ -22,5 +22,6 @@ app.use(router.routes(),router.allowedMethods());
 app.listen(PORT, () => {
   console.info(`[ApiServer] Listening on Port ${PORT} / at ${environment} Env`);
 });
+
 
 module.exports = app;

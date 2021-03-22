@@ -1,6 +1,6 @@
 const config = require("../config");
 const jwt = require("jsonwebtoken");
-const { User } = require("../model");
+const { User } = require("../models");
 const response = require("../utils/response");
 
 exports.isLogged = async (ctx, next) => {
@@ -12,12 +12,9 @@ exports.isLogged = async (ctx, next) => {
     let tokenInfo;
     await new Promise((resolve, reject) => {
       jwt.verify(token, config.jwt_secret, (err, decoded) => {
-        console.log(decoded);
         if (err) {
-          console.log(err);
           return response.unauthorized(ctx, { error: "Token is invalid" });
         }
-        console.log("verify token done");
         tokenInfo = decoded;
         resolve(tokenInfo);
       });

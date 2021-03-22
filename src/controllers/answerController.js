@@ -1,4 +1,4 @@
-const { Answer } = require("../model");
+const { Answer } = require("../models");
 const response = require("../utils/response");
 const answerService = require("../service/answer");
 const { QueryTypes,sequelize, literal,Op } = require('sequelize');
@@ -7,7 +7,6 @@ exports.sameResult = async (ctx) => {
   try {
     let count = 0;
     let {questionId, answerList} = ctx.params;
-    console.log(questionId,answerList)
     questionId = parseInt(questionId)
     answerList = parseInt(answerList)
     const answer = await Answer.findAndCountAll({where: {

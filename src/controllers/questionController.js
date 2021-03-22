@@ -1,11 +1,10 @@
-const { Question, Answer } = require("../model");
+const { Question, Answer } = require("../models");
 const response = require("../utils/response");
 const answerService = require("../service/answer");
 
 exports.checkResult = async (ctx) => {
   try {
     let user = ctx.state.user;
-    console.log(user.id);
     let list_answers = [];
     let data = {
       username: user.username,
@@ -26,7 +25,6 @@ exports.checkResult = async (ctx) => {
       }
     }
 
-    console.log(list_answers);
     let saveAnswer = await answerService.saveAnswer(user.id, list_answers);
     if (!saveAnswer) return response.error(ctx, { error: "Save answer error" });
 
@@ -105,7 +103,6 @@ exports.updateItem = async (ctx) => {
     if (!question)
       return response.notFound(ctx, { error: "Not found question" });
 
-    console.log("1", question.content);
     let dataUpdate = {
       content: content || question.content,
       correct_answers: correct_answers || question.correct_answers,
